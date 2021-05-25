@@ -32,7 +32,7 @@ func Read(file string) ([]string, error) {
 		if line == "" {
 			break
 		}
-		lines = append(lines, strings.Trim(line, "\r\n"))
+		lines = append(lines, strings.Trim(line, "\n"))
 	}
 	return lines, nil
 }
@@ -49,9 +49,9 @@ func write(file string, lines []string, filter string, content string) error {
 	for _, line := range lines {
 
 		if strings.Contains(line, filter) {
-			fmt.Fprintf(f, "%s\r\n", content)
+			fmt.Fprintf(f, "%s\n", content)
 		} else {
-			fmt.Fprintf(f, "%s\r\n", line)
+			fmt.Fprintf(f, "%s\n", line)
 		}
 	}
 	return nil
@@ -70,12 +70,14 @@ func replace_file(file, filter string, content string) error {
 
 // go.mod 替换下 replace google.golang.org/grpc => google.golang.org/grpc v1.26.0
 //项目目录
-var Dir = "/ckp"
+var Dir = "/odradek"
 
 func main() {
-	pwd, _ := os.Getwd()
+	//pwd, _ := os.Getwd()
+	pwd := "/Users/lllsy/go/src/gitlab.deepmanga.com/odradek"
+
 	//生成新的proto
-	GenerateProto(pwd + Dir)
+	//GenerateProto(pwd + Dir)
 	files := ReadFileSuffix(pwd+Dir, ".go")
 	//获取项目下所有文件进行替换
 	for _, filename := range files {
